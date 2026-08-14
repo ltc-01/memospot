@@ -153,13 +153,12 @@ jobs:
           retryAttempts: 2
 
       # Fallback for repositories without the updater signing secrets: build
-      # the app with the updater disabled via `TAURI_SKIP_UPDATER`, so no
-      # signing is required and no update artifacts are produced.
+      # the app with updater artifacts disabled via `bundle.createUpdaterArtifacts`
+      # (see `tauri-no-updater.json`), so no signing is required and no update
+      # artifacts are produced.
       - name: Build Tauri App (without updater)
         if: env.TAURI_UPDATE_ENABLED == 'false'
         uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f
-        env:
-          TAURI_SKIP_UPDATER: "true"
         with:
           tagName: v__VERSION__
           releaseName: "v__VERSION__"
@@ -169,5 +168,5 @@ jobs:
             [Installation & Safety notes](https://memospot.github.io/guides/installation/)
           releaseDraft: true
           prerelease: false
-          args: --target ${{ matrix.platform.rust_target }}
+          args: --target ${{ matrix.platform.rust_target }} --config ${{ github.workspace }}/.github/tauri-no-updater.json
           retryAttempts: 2
