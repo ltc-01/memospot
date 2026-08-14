@@ -91,7 +91,7 @@
   "settingsViewMaximizedDescription": "以最大化方式啟動應用程式。",
   "settingsViewMaximizedSearchKeywords": "最大化視窗",
   "settingsViewMinimizeToTray": "關閉時最小化到系統托盤",
-  "settingsViewMinimizeToTrayDescription": "點擊關閉按鈕時將主視窗最小化到系統托盤，而不是結束程式。可透過托盤圖示恢復視窗或結束程式。",
+  "settingsViewMinimizeToTrayDescription": "關閉視窗後應用程式會繼續在系統托盤中執行。",
   "settingsViewMinimizeToTraySearchKeywords": "托盤;系統托盤;關閉",
   "settingsViewReduceAnimation": "減少動畫",
   "settingsViewReduceAnimationDescription": "減少介面中的動畫。",

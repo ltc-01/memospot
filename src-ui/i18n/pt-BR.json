@@ -91,7 +91,7 @@
   "settingsViewMaximizedDescription": "Inicia a aplicação maximizada.",
   "settingsViewMaximizedSearchKeywords": "maximizar janela",
   "settingsViewMinimizeToTray": "Minimizar para a bandeja",
-  "settingsViewMinimizeToTrayDescription": "O botão fechar minimiza a janela principal para a bandeja do sistema em vez de sair do aplicativo. Use o ícone da bandeja para restaurar ou sair.",
+  "settingsViewMinimizeToTrayDescription": "O aplicativo continua em execução na bandeja ao fechar a janela.",
   "settingsViewMinimizeToTraySearchKeywords": "bandeja;bandeja do sistema;fechar",
   "settingsViewReduceAnimation": "Reduzir animações",
   "settingsViewReduceAnimationDescription": "Reduzir animações na interface.",

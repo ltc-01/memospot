@@ -88,6 +88,7 @@ prompt-install-webview-message = WebView *обязателен* для рабо�
 
     Хотите его установить?
 prompt-install-webview-title = Ошибка WebView
+tray-open = &Открыть Memospot
 viewmenu = &Просмотр
 viewmenu-developer-tools = &Инструменты разработчика
 viewmenu-new-window = &Новое окно

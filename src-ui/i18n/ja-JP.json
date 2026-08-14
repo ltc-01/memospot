@@ -91,7 +91,7 @@
   "settingsViewMaximizedDescription": "アプリを最大限に起動します。",
   "settingsViewMaximizedSearchKeywords": "ウィンドウ最大化",
   "settingsViewMinimizeToTray": "閉じる時にトレイへ最小化",
-  "settingsViewMinimizeToTrayDescription": "閉じるボタンを押すと、アプリを終了せずにメインウィンドウをシステムトレイへ最小化します。トレイのアイコンから復元または終了できます。",
+  "settingsViewMinimizeToTrayDescription": "ウィンドウを閉じても、アプリはトレイで実行し続けます。",
   "settingsViewMinimizeToTraySearchKeywords": "トレイ;システムトレイ;閉じる",
   "settingsViewReduceAnimation": "アニメーションを減らす",
   "settingsViewReduceAnimationDescription": "インターフェイス内のアニメーションを減らします。",

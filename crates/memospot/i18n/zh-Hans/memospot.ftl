@@ -88,6 +88,7 @@ prompt-install-webview-message = 此应用程序*需要* WebView 才能运行，
 
     您是否希望安装它？
 prompt-install-webview-title = WebView 错误
+tray-open = &打开主界面
 viewmenu = &查看
 viewmenu-developer-tools = 开发者工具
 viewmenu-new-window = 新建窗口

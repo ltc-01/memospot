@@ -88,6 +88,7 @@ prompt-install-webview-message = Une WebView est *nécessaire* pour que cette ap
 
     Voulez-vous l'installer ?
 prompt-install-webview-title = Erreur WebView
+tray-open = &Ouvrir Memospot
 viewmenu = &Voir
 viewmenu-developer-tools = &Outils de développement
 viewmenu-new-window = &Nouvelle fenêtre

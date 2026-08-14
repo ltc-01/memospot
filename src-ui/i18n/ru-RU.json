@@ -91,7 +91,7 @@
   "settingsViewMaximizedDescription": "Запускает развернуть приложение.",
   "settingsViewMaximizedSearchKeywords": "развернуть окно",
   "settingsViewMinimizeToTray": "Сворачивать в трей при закрытии",
-  "settingsViewMinimizeToTrayDescription": "Кнопка закрытия сворачивает главное окно в системный трей вместо выхода из приложения. Используйте значок в трее, чтобы восстановить окно или выйти.",
+  "settingsViewMinimizeToTrayDescription": "Приложение продолжает работать в трее при закрытии окна.",
   "settingsViewMinimizeToTraySearchKeywords": "трей;системный трей;кнопка закрытия",
   "settingsViewReduceAnimation": "Уменьшить анимацию",
   "settingsViewReduceAnimationDescription": "Уменьшить анимацию в интерфейсе.",

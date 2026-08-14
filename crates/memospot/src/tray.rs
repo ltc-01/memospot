@@ -14,7 +14,7 @@ use tauri::{AppHandle, Manager, Runtime};
 /// Tray icon identifier, used to look up the tray icon at runtime.
 pub(crate) const TRAY_ID: &str = "memospot-tray";
 
-const MENU_SHOW: &str = "tray-show";
+const MENU_OPEN: &str = "tray-open";
 const MENU_QUIT: &str = "tray-quit";
 
 /// Show and focus the main window.
@@ -35,9 +35,9 @@ pub(crate) fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<()> {
         return Ok(());
     };
 
-    let show = MenuItemBuilder::with_id(MENU_SHOW, fl!("tray-show")).build(app)?;
+    let open = MenuItemBuilder::with_id(MENU_OPEN, fl!("tray-open")).build(app)?;
     let quit = MenuItemBuilder::with_id(MENU_QUIT, fl!("appmenu-quit")).build(app)?;
-    let menu = Menu::with_items(app, &[&show, &quit])?;
+    let menu = Menu::with_items(app, &[&open, &quit])?;
 
     TrayIconBuilder::with_id(TRAY_ID)
         .icon(icon.clone())
@@ -47,7 +47,7 @@ pub(crate) fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<()> {
         // left-click instead (macOS), or click events are not delivered (Linux).
         .show_menu_on_left_click(cfg!(not(target_os = "windows")))
         .on_menu_event(|app, event| match event.id().0.as_str() {
-            MENU_SHOW => show_main_window(app),
+            MENU_OPEN => show_main_window(app),
             MENU_QUIT => {
                 debug!("quitting from system tray");
                 app.exit(0);

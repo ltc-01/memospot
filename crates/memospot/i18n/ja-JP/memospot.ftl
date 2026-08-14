@@ -87,6 +87,7 @@ prompt-install-webview-message = このアプリケーションを
 
     インストールしますか？
 prompt-install-webview-title = WebView エラー
+tray-open = Memospot を開く(&O)
 viewmenu = 表示(&V)
 viewmenu-developer-tools = 開発ツール(&O)
 viewmenu-new-window = 新しいウィンドウ(&N)

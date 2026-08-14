@@ -91,7 +91,7 @@
   "settingsViewMaximizedDescription": "启动最大化应用程序。",
   "settingsViewMaximizedSearchKeywords": "最大化窗口",
   "settingsViewMinimizeToTray": "关闭时最小化到托盘",
-  "settingsViewMinimizeToTrayDescription": "点击关闭按钮时将主窗口最小化到系统托盘，而不是退出程序。可通过托盘图标恢复窗口或退出程序。",
+  "settingsViewMinimizeToTrayDescription": "关闭窗口后应用继续在系统托盘中运行。",
   "settingsViewMinimizeToTraySearchKeywords": "托盘;系统托盘;关闭",
   "settingsViewReduceAnimation": "减少动画",
   "settingsViewReduceAnimationDescription": "在接口中减少动画。",
