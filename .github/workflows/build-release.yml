@@ -118,7 +118,7 @@ jobs:
 
       # Detect whether the updater signing secrets are configured. The official
       # repository builds a signed updater release; forks without the secrets
-      # fall back to a build with the updater disabled (see `tauri-no-updater.json`).
+      # fall back to a build with the updater disabled via `TAURI_SKIP_UPDATER`.
       - name: Check updater signing key
         shell: bash
         env:
@@ -153,11 +153,13 @@ jobs:
           retryAttempts: 2
 
       # Fallback for repositories without the updater signing secrets: build
-      # the app with the updater disabled, so no signing is required and no
-      # update artifacts are produced.
+      # the app with the updater disabled via `TAURI_SKIP_UPDATER`, so no
+      # signing is required and no update artifacts are produced.
       - name: Build Tauri App (without updater)
         if: env.TAURI_UPDATE_ENABLED == 'false'
         uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f
+        env:
+          TAURI_SKIP_UPDATER: "true"
         with:
           tagName: v__VERSION__
           releaseName: "v__VERSION__"
@@ -167,5 +169,5 @@ jobs:
             [Installation & Safety notes](https://memospot.github.io/guides/installation/)
           releaseDraft: true
           prerelease: false
-          args: --target ${{ matrix.platform.rust_target }} --config ${{ github.workspace }}/.github/tauri-no-updater.json
+          args: --target ${{ matrix.platform.rust_target }}
           retryAttempts: 2
