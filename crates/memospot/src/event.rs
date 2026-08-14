@@ -98,9 +98,29 @@ fn handle_exit_event<R: Runtime>(app: &AppHandle<R>) {
 /// Closing via the dock still skips this event; in that case, we rely on
 /// [`RunEvent::Exit`], which behaves correctly.
 fn handle_exit_requested_event<R: Runtime>(app: &AppHandle<R>, run_event: RunEvent) {
-    let RunEvent::ExitRequested { api, .. } = run_event else {
+    let RunEvent::ExitRequested { api, code, .. } = run_event else {
         return;
     };
+
+    // When the main window is hidden in the system tray, an exit request
+    // triggered by closing the last remaining window (e.g. the settings
+    // window) must not quit the app. Explicit exit requests (`app.exit(code)`,
+    // e.g. the tray Quit item or `CmdOrCtrl+Q`) always proceed.
+    let minimize_to_tray = RuntimeConfig::from_global_store()
+        .yaml
+        .memospot
+        .window
+        .minimize_to_tray
+        .unwrap_or_default();
+    let main_hidden = app
+        .get_webview_window(Window::Main.into())
+        .and_then(|w| w.is_visible().ok())
+        .is_some_and(|visible| !visible);
+    if minimize_to_tray && main_hidden && code.is_none() {
+        api.prevent_exit();
+        debug!("exit requested while the main window is hidden in the system tray. Keeping the app running.");
+        return;
+    }
 
     // Keep the event loop running even if all windows are closed to run cleanup code.
     api.prevent_exit();
@@ -345,7 +365,25 @@ where
                         w.persist_window_state();
                     }
                 }
-                WindowEvent::CloseRequested { .. } => {
+                WindowEvent::CloseRequested { api, .. } => {
+                    // When "minimize to tray on close" is enabled, hide the main
+                    // window instead of closing it, keeping the app running in
+                    // the background. Other windows are left untouched: this
+                    // setting only affects the main window's close button.
+                    let minimize_to_tray = RuntimeConfig::from_global_store()
+                        .yaml
+                        .memospot
+                        .window
+                        .minimize_to_tray
+                        .unwrap_or_default();
+                    if minimize_to_tray && app.tray_by_id(crate::tray::TRAY_ID).is_some() {
+                        api.prevent_close();
+                        if let Some(w) = app.get_webview_window(Window::Main.into()) {
+                            let _ = w.hide();
+                        }
+                        return;
+                    }
+
                     // Close all windows except `main` itself.
                     app.webview_windows()
                         .into_iter()

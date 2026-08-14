@@ -106,6 +106,9 @@ pub struct Window {
     pub reduce_animation: Option<bool>,
     /// Locale.
     pub locale: Option<String>,
+    /// Minimize the main window to the system tray when closed,
+    /// keeping the app running in the background.
+    pub minimize_to_tray: Option<bool>,
 }
 impl Default for Window {
     fn default() -> Self {
@@ -122,6 +125,7 @@ impl Default for Window {
             theme: None,
             reduce_animation: Some(false),
             locale: None,
+            minimize_to_tray: Some(false),
         }
     }
 }

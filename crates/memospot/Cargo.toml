@@ -58,7 +58,8 @@ i18n-embed-fl = { workspace = true }
 rust-embed = { workspace = true }
 
 # tauri
-tauri = { workspace = true, features = ["config-toml"] }
+# `tray-icon` is required for the "minimize to tray on close" setting.
+tauri = { workspace = true, features = ["config-toml", "tray-icon"] }
 tauri-plugin-dialog = { workspace = true }
 tauri-plugin-fs = { workspace = true }
 tauri-plugin-http = { workspace = true, features = ["gzip", "rustls-tls"] }

@@ -48,4 +48,8 @@ reduce_animation: boolean | null,
 /**
  * Locale.
  */
-locale: string | null, };
+locale: string | null, 
+/**
+ * Minimize the main window to the system tray when closed, keeping the app running in the background.
+ */
+minimize_to_tray: boolean | null, };

@@ -11,6 +11,7 @@ mod runtime_config;
 mod sqlite;
 #[cfg(test)]
 mod tests;
+mod tray;
 mod updater;
 mod utils;
 mod webview;
@@ -209,8 +210,11 @@ pub fn run() {
     let Ok(tauri_app) = tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_single_instance::init(|app, _, _| {
-            app.get_webview_window(Window::Main.into())
-                .map(|w| w.set_focus().ok());
+            // Restore the main window if it is hidden, e.g. minimized to the system tray.
+            if let Some(window) = app.get_webview_window(Window::Main.into()) {
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
         }))
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_http::init())
@@ -282,6 +286,12 @@ pub fn run() {
             // The menu must be set at the application level to also work in macOS.
             app.set_menu(menu::build(app_handle)?)?;
             menu::update_memos_version_entry(app_handle);
+
+            // Create the system tray icon at startup so the main window can be
+            // restored from the tray when "minimize to tray on close" is enabled.
+            if let Err(error) = tray::build(app_handle) {
+                warn!("failed to create system tray icon: {error}");
+            }
 
             if should_run_updater {
                 debug!("starting updater");

@@ -37,6 +37,7 @@ let input = $state({
     maximized: false,
     fullscreen: false,
     centered: false,
+    minimizeToTray: false,
     locale: "system" as Locale,
     reduce_animation: false,
     theme: "system" as Theme
@@ -90,6 +91,7 @@ async function setPageToInitialConfig() {
         maximized: initialConfig.memospot.window.maximized ?? false,
         fullscreen: initialConfig.memospot.window.fullscreen ?? false,
         centered: initialConfig.memospot.window.center ?? false,
+        minimizeToTray: initialConfig.memospot.window.minimize_to_tray ?? false,
         locale: (initialConfig.memospot.window.locale ?? "system") as Locale,
         reduce_animation: initialConfig.memospot.window.reduce_animation ?? false,
         theme: (initialConfig.memospot.window.theme ??
@@ -107,6 +109,7 @@ async function setPageToDefaultConfig() {
         maximized: defaultJSON.memospot.window.maximized ?? false,
         fullscreen: defaultJSON.memospot.window.fullscreen ?? false,
         centered: defaultJSON.memospot.window.center ?? false,
+        minimizeToTray: defaultJSON.memospot.window.minimize_to_tray ?? false,
         locale: (defaultJSON.memospot.window.locale ?? "system") as Locale,
         reduce_animation: defaultJSON.memospot.window.reduce_animation ?? false,
         theme: (defaultJSON.memospot.window.theme ?? "system") as Theme
@@ -172,6 +175,7 @@ $effect(() => {
     currentConfig.memospot.window.maximized = input.maximized;
     currentConfig.memospot.window.fullscreen = input.fullscreen;
     currentConfig.memospot.window.center = input.centered;
+    currentConfig.memospot.window.minimize_to_tray = input.minimizeToTray;
     currentConfig.memospot.window.locale = input.locale;
     currentConfig.memospot.window.reduce_animation = input.reduce_animation;
     currentConfig.memospot.window.theme = input.theme;
@@ -316,6 +320,20 @@ $effect(() => {
       bind:checked={input.fullscreen}
       onclick={() => {
           currentConfig.memospot.window.fullscreen = input.fullscreen;
+      }}
+    />
+  </Setting>
+
+  <Setting
+    name={m.settingsViewMinimizeToTray()}
+    desc={m.settingsViewMinimizeToTrayDescription()}
+    searchId="view-minimize-to-tray"
+    searchKeywords={keywordsFromLocale(m.settingsViewMinimizeToTraySearchKeywords)}
+  >
+    <Switch
+      bind:checked={input.minimizeToTray}
+      onclick={() => {
+          currentConfig.memospot.window.minimize_to_tray = input.minimizeToTray;
       }}
     />
   </Setting>
