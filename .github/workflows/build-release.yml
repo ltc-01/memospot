@@ -116,7 +116,22 @@ jobs:
         run: just download-memos
       #/ Memos
 
-      - name: Build Tauri App
+      # Detect whether the updater signing secrets are configured. The official
+      # repository builds a signed updater release; forks without the secrets
+      # fall back to a build with the updater disabled (see `tauri-no-updater.json`).
+      - name: Check updater signing key
+        shell: bash
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        run: |
+          if [ -n "$TAURI_SIGNING_PRIVATE_KEY" ]; then
+            echo "TAURI_UPDATE_ENABLED=true" >> "$GITHUB_ENV"
+          else
+            echo "TAURI_UPDATE_ENABLED=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build Tauri App (with updater)
+        if: env.TAURI_UPDATE_ENABLED == 'true'
         uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
@@ -135,4 +150,22 @@ jobs:
           args: --target ${{ matrix.platform.rust_target }}
           uploadUpdaterJson: true
           updaterJsonPreferNsis: true
+          retryAttempts: 2
+
+      # Fallback for repositories without the updater signing secrets: build
+      # the app with the updater disabled, so no signing is required and no
+      # update artifacts are produced.
+      - name: Build Tauri App (without updater)
+        if: env.TAURI_UPDATE_ENABLED == 'false'
+        uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f
+        with:
+          tagName: v__VERSION__
+          releaseName: "v__VERSION__"
+          releaseBody: |
+            Bundled Memos version: **${{ env.MEMOS_VERSION }}**
+
+            [Installation & Safety notes](https://memospot.github.io/guides/installation/)
+          releaseDraft: true
+          prerelease: false
+          args: --target ${{ matrix.platform.rust_target }} --config ${{ github.workspace }}/.github/tauri-no-updater.json
           retryAttempts: 2
